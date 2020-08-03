@@ -1,0 +1,8 @@
+# Created by .ignore support plugin (hsz.mobi)
+
+main
+lastupdate.tmp
+routers/commentsRouter__*
+.DS_Store
+.idea
+.idea/*
