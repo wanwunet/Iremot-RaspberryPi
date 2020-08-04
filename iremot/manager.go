@@ -27,8 +27,8 @@ func Heartbeat() {
 	var SleepTime int64 = 1000000000
 	for {
 		NowTime := time.Now().UnixNano()
-		MqttSingleton.msgSend <- message{TOPIC_HEARTBEAT, device.GetPinStateAllJson()}
-		//fmt.Println(drive.GetPinStateAllJson())
+		MqttSingleton.msgSend <- message{TOPIC_HEARTBEAT(), device.GetPinStateAll()}
+		//fmt.Println(device.GetPinStateAllJson())
 
 		if diff := time.Now().UnixNano() - NowTime; diff < SleepTime {
 			time.Sleep(time.Duration(SleepTime - diff))
