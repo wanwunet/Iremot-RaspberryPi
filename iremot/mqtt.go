@@ -1,6 +1,8 @@
 package iremot
 
 import (
+	"Iremot-RaspberryPi/conf"
+	"Iremot-RaspberryPi/util/md5"
 	"encoding/json"
 	"fmt"
 	mqtt "github.com/eclipse/paho.mqtt.golang"
@@ -41,9 +43,10 @@ func NewMqttClient() *MqttClientManger {
 	clinetOptions := mqtt.NewClientOptions().AddBroker(Server)
 
 	//设置用户名密码
-	clinetOptions.SetUsername(Username).SetPassword(Password)
+	pass := conf.Serial() + "-" + conf.Password
+	clinetOptions.SetUsername(conf.ProductId).SetPassword(md5.MD5(pass))
 	//设置客户端ID
-	clinetOptions.SetClientID(ClientID)
+	clinetOptions.SetClientID(conf.Ether())
 	//设置handler
 	clinetOptions.SetDefaultPublishHandler(messagePubHandler)
 	//设置连接超时
