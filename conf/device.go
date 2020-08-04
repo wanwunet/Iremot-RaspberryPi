@@ -1,7 +1,6 @@
 package conf
 
 import (
-	"fmt"
 	"io/ioutil"
 	"net"
 	"strings"
@@ -58,17 +57,23 @@ func Model() (mod string) {
 	return mod
 }
 
-func Ether() (add string) {
+func Ether() string {
 
 	interfaces, err := net.Interfaces()
 	if err != nil {
 		panic("Error:" + err.Error())
 	}
 	for _, inter := range interfaces {
-		fmt.Println(inter.Name)
-		fmt.Println(inter.Index)
-		fmt.Println(inter.HardwareAddr)
+		if inter.Name == "wlan0" {
+			return inter.HardwareAddr.String()
+		}
 	}
 
-	return add
+	for _, inter := range interfaces {
+		if inter.Name == "eth0" {
+			return inter.HardwareAddr.String()
+		}
+	}
+
+	return ""
 }
