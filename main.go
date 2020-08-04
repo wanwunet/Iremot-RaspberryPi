@@ -1,21 +1,25 @@
 package main
 
 import (
-	"Iremot-RaspberryPi/drive"
+	"Iremot-RaspberryPi/conf"
+	"Iremot-RaspberryPi/device"
 	"Iremot-RaspberryPi/iremot"
+	_ "Iremot-RaspberryPi/www/routers"
 	"fmt"
-	"time"
+	"github.com/astaxie/beego"
 )
 
 func main() {
 
-	drive.Open()
-	defer drive.Close()
+	fmt.Println(conf.Serial())
+	fmt.Println(conf.Model())
+	fmt.Println(conf.Ether())
+
+	device.Open()
+	defer device.Close()
 
 	iremot.Open()
 	defer iremot.Close()
 
-	fmt.Println(drive.GetPinStateAllJson())
-	time.Sleep(1000 * time.Second)
-
+	beego.Run()
 }

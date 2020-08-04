@@ -1,8 +1,7 @@
 package iremot
 
 import (
-	"Iremot-RaspberryPi/drive"
-	"fmt"
+	"Iremot-RaspberryPi/device"
 	"time"
 )
 
@@ -28,10 +27,8 @@ func Heartbeat() {
 	var SleepTime int64 = 1000000000
 	for {
 		NowTime := time.Now().UnixNano()
-
-		fmt.Println(drive.GetPinStateAllJson())
-
-		MqttSingleton.msgSend <- message{TOPIC_HEARTBEAT, drive.GetPinStateAllJson()}
+		MqttSingleton.msgSend <- message{TOPIC_HEARTBEAT, device.GetPinStateAllJson()}
+		//fmt.Println(drive.GetPinStateAllJson())
 
 		if diff := time.Now().UnixNano() - NowTime; diff < SleepTime {
 			time.Sleep(time.Duration(SleepTime - diff))
