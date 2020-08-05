@@ -34,7 +34,7 @@ func Heartbeat() {
 			PinArr:   device.GetPinStateAll(),
 		}
 
-		MqttSingleton.msgSend <- message{TOPIC_HEARTBEAT(), model}
+		MqttSingleton.MsgSend <- Message{TOPIC_HEARTBEAT(), model}
 		//fmt.Println(device.GetPinStateAllJson())
 
 		if diff := time.Now().UnixNano() - NowTime; diff < SleepTime {

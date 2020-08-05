@@ -21,16 +21,15 @@ import (
 //	fmt.Printf("Sub Client msg : %s \n", msg.Payload())
 //}
 
-type message struct {
-	topic   string
-	payload interface{}
+type Message struct {
+	Topic   string
+	Payload interface{}
 }
 
 // 客户端管理器
 type MqttClientManger struct {
-	client   mqtt.Client
-	msgSend  chan message
-	topicSub []string
+	Client  mqtt.Client
+	MsgSend chan Message
 }
 
 func NewMqttClient() *MqttClientManger {
@@ -50,13 +49,13 @@ func NewMqttClient() *MqttClientManger {
 	clinetOptions.SetAutoReconnect(true)
 	//创建客户端连接
 	c := mqtt.NewClient(clinetOptions)
-	msg := make(chan message)
-	return &MqttClientManger{client: c, msgSend: msg}
+	msg := make(chan Message)
+	return &MqttClientManger{Client: c, MsgSend: msg}
 }
 
 // 客户端连接
 func (mg *MqttClientManger) NewConnect() {
-	if token := mg.client.Connect(); token.WaitTimeout(time.Duration(60)*time.Second) && token.Wait() && token.Error() != nil {
+	if token := mg.Client.Connect(); token.WaitTimeout(time.Duration(60)*time.Second) && token.Wait() && token.Error() != nil {
 		fmt.Printf("[Pub] mqtt connect error, error: %s \n", token.Error())
 		return
 	}
@@ -65,14 +64,14 @@ func (mg *MqttClientManger) NewConnect() {
 // 发送消息
 func (mg *MqttClientManger) Publish() {
 	for {
-		msg, ok := <-mg.msgSend
+		msg, ok := <-mg.MsgSend
 		if ok {
 			// 格式化数据，将信息转换为json
-			payload, err := json.Marshal(msg.payload)
+			payload, err := json.Marshal(msg.Payload)
 			if err != nil {
 				fmt.Println(err)
 			}
-			token := mg.client.Publish(msg.topic, 1, false, payload)
+			token := mg.Client.Publish(msg.Topic, 1, false, payload)
 			token.Wait()
 		}
 	}
@@ -88,7 +87,7 @@ func (mg *MqttClientManger) Publish() {
 //}
 
 func (mg *MqttClientManger) Subscribe(topic string, messageSubHandler func(client mqtt.Client, msg mqtt.Message)) {
-	mg.client.Subscribe(topic, 1, messageSubHandler)
+	mg.Client.Subscribe(topic, 1, messageSubHandler)
 }
 
 // 启动服务
