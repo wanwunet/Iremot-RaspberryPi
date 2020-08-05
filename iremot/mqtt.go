@@ -10,16 +10,16 @@ import (
 )
 
 //创建全局mqtt publish消息处理 handler
-var messagePubHandler mqtt.MessageHandler = func(client mqtt.Client, msg mqtt.Message) {
-	fmt.Printf("Pub Client Topic : %s \n", msg.Topic())
-	fmt.Printf("Pub Client msg : %s \n", msg.Payload())
-}
+//var messagePubHandler mqtt.MessageHandler = func(client mqtt.Client, msg mqtt.Message) {
+//	fmt.Printf("Pub Client Topic : %s \n", msg.Topic())
+//	fmt.Printf("Pub Client msg : %s \n", msg.Payload())
+//}
 
 //创建全局mqtt sub消息处理 handler
-var messageSubHandler mqtt.MessageHandler = func(client mqtt.Client, msg mqtt.Message) {
-	fmt.Printf("Sub Client Topic : %s--", msg.Topic())
-	fmt.Printf("Sub Client msg : %s \n", msg.Payload())
-}
+//var messageSubHandler mqtt.MessageHandler = func(client mqtt.Client, msg mqtt.Message) {
+//	fmt.Printf("Sub Client Topic : %s--", msg.Topic())
+//	fmt.Printf("Sub Client msg : %s \n", msg.Payload())
+//}
 
 type message struct {
 	topic   string
@@ -33,11 +33,6 @@ type MqttClientManger struct {
 	topicSub []string
 }
 
-func newMqttClient(options *mqtt.ClientOptions) mqtt.Client {
-	client := mqtt.NewClient(options)
-	return client
-}
-
 func NewMqttClient() *MqttClientManger {
 
 	clinetOptions := mqtt.NewClientOptions().AddBroker(Server)
@@ -48,13 +43,13 @@ func NewMqttClient() *MqttClientManger {
 	//设置客户端ID
 	clinetOptions.SetClientID(conf.Ether())
 	//设置handler
-	clinetOptions.SetDefaultPublishHandler(messagePubHandler)
+	//clinetOptions.SetDefaultPublishHandler(messagePubHandler)
 	//设置连接超时
 	clinetOptions.SetConnectTimeout(time.Duration(60) * time.Second)
 	//设置自动重连
 	clinetOptions.SetAutoReconnect(true)
 	//创建客户端连接
-	c := newMqttClient(clinetOptions)
+	c := mqtt.NewClient(clinetOptions)
 	msg := make(chan message)
 	return &MqttClientManger{client: c, msgSend: msg}
 }
@@ -85,15 +80,19 @@ func (mg *MqttClientManger) Publish() {
 }
 
 // 订阅消息
-func (mg *MqttClientManger) Subscribe() {
-	for _, topic := range mg.topicSub {
-		token := mg.client.Subscribe(topic, 1, messageSubHandler)
-		token.Wait()
-	}
+//func (mg *MqttClientManger) Subscribe() {
+//	for _, topic := range mg.topicSub {
+//		token := mg.client.Subscribe(topic, 1, messageSubHandler)
+//		token.Wait()
+//	}
+//}
+
+func (mg *MqttClientManger) Subscribe(topic string, messageSubHandler func(client mqtt.Client, msg mqtt.Message)) {
+	mg.client.Subscribe(topic, 1, messageSubHandler)
 }
 
 // 启动服务
 func (mg *MqttClientManger) Run() {
-	go mg.Subscribe()
+	//go mg.Subscribe()
 	go mg.Publish()
 }
