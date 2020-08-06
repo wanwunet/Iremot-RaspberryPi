@@ -2,16 +2,11 @@ package device
 
 import (
 	"Iremot-RaspberryPi/device/rpio"
+	"Iremot-RaspberryPi/models"
 	"encoding/json"
 )
 
-type PinState struct {
-	Pin   int8
-	Mod   uint32
-	State uint32
-}
-
-func GetPinState(pin int8) (sta PinState) {
+func GetPinState(pin int8) (sta models.PinState) {
 	sta.Pin = pin
 	p := rpio.Pin(Physical2BCM[sta.Pin])
 	sta.Mod = rpio.ReadPinMode(p)
@@ -19,8 +14,8 @@ func GetPinState(pin int8) (sta PinState) {
 	return sta
 }
 
-func GetPinStateAll() (staList []PinState) {
-	staList = make([]PinState, len(GpioPhysical))
+func GetPinStateAll() (staList []models.PinState) {
+	staList = make([]models.PinState, len(GpioPhysical))
 	for i := 0; i < len(staList); i++ {
 		staList[i] = GetPinState(GpioPhysical[i])
 	}

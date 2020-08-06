@@ -2,6 +2,7 @@ package iremot
 
 import (
 	"Iremot-RaspberryPi/device"
+	"Iremot-RaspberryPi/models"
 	"time"
 )
 
@@ -23,12 +24,14 @@ func Close() {
 }
 
 //心跳
+var HeartbeatID uint64
+
 func Heartbeat() {
 	var SleepTime int64 = 1000000000
 	for {
 		NowTime := time.Now().UnixNano()
 
-		model := HeartbeatModel{
+		model := models.HeartbeatModel{
 			Id:       HeartbeatID,
 			SednTime: time.Now().Unix(),
 			PinArr:   device.GetPinStateAll(),
