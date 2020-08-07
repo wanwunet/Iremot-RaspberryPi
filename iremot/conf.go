@@ -24,3 +24,13 @@ func TOPIC_GETGPIO() string {
 func TOPIC_PWMGPIO() string {
 	return "iremot_pi/" + conf.ProductId + "/" + conf.Ether() + "/pwm_gpio"
 }
+
+//DATA FRAME gpio
+func TOPIC_DATAFRAMEGPIO() string {
+	return "iremot_pi/" + conf.ProductId + "/" + conf.Ether() + "/datagrame_gpio"
+}
+
+//def gpio
+func TOPIC_DEFGPIO() string {
+	return "iremot_pi/" + conf.ProductId + "/" + conf.Ether() + "/def_gpio"
+}

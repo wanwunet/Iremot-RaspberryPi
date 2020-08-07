@@ -11,10 +11,3 @@ type PinState struct {
 	Mod   uint32
 	State uint32
 }
-
-type PwmGpio struct {
-	Pin      int8
-	Freq     int
-	DutyLen  uint32
-	CycleLen uint32
-}
