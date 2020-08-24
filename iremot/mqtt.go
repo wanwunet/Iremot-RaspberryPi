@@ -40,7 +40,7 @@ func NewMqttClient() *MqttClientManger {
 	pass := conf.Serial() + "-" + conf.Password
 	clinetOptions.SetUsername(conf.ProductId).SetPassword(md5.MD5(pass))
 	//设置客户端ID
-	clinetOptions.SetClientID(conf.Ether())
+	clinetOptions.SetClientID(conf.ID())
 	//设置handler
 	//clinetOptions.SetDefaultPublishHandler(messagePubHandler)
 	//设置连接超时
@@ -87,7 +87,7 @@ func (mg *MqttClientManger) Publish() {
 //}
 
 func (mg *MqttClientManger) Subscribe(topic string, messageSubHandler func(client mqtt.Client, msg mqtt.Message)) {
-	mg.Client.Subscribe(topic, 1, messageSubHandler)
+	fmt.Println(mg.Client.Subscribe(topic, 1, messageSubHandler))
 }
 
 // 启动服务

@@ -77,3 +77,7 @@ func Ether() string {
 
 	return ""
 }
+
+func ID() string {
+	return strings.Replace(Ether(), ":", "", -1)
+}
