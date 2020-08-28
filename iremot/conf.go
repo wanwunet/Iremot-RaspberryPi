@@ -34,3 +34,8 @@ func TOPIC_DATAFRAMEGPIO() string {
 func TOPIC_DEFGPIO() string {
 	return "iremot_pi/" + conf.ProductId + "/" + conf.ID() + "/def_gpio"
 }
+
+//def gpio
+func TOPIC_DEVICEALLGPIOTASK() string {
+	return "iremot_pi/" + conf.ProductId + "/device_all/gpio_task"
+}

@@ -6,4 +6,5 @@ func router() {
 	MqttSingleton.Subscribe(TOPIC_PWMGPIO(), pwmgpioSubHandler)
 	MqttSingleton.Subscribe(TOPIC_DATAFRAMEGPIO(), dataframegpioSubHandler)
 	MqttSingleton.Subscribe(TOPIC_DEFGPIO(), defgpioSubHandler)
+	MqttSingleton.Subscribe(TOPIC_DEVICEALLGPIOTASK(), deviceallgpiotaskSubHandler)
 }

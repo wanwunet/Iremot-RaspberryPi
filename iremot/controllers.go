@@ -63,3 +63,10 @@ var defgpioSubHandler mqtt.MessageHandler = func(client mqtt.Client, msg mqtt.Me
 	pin.Input()
 	fmt.Println(mod)
 }
+
+//def gpio iremot/产品ID/设备ID/dataframegpio
+var deviceallgpiotaskSubHandler mqtt.MessageHandler = func(client mqtt.Client, msg mqtt.Message) {
+	task := models.DeviceTask{}
+	json.Decode(msg.Payload(), &task)
+	fmt.Println(task)
+}
