@@ -1,4 +1,4 @@
-package device
+package pinmap
 
 // Physical, BCM, WiringPi
 var PinMaping = [][]int8{

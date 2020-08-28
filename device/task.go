@@ -1,6 +1,7 @@
 package device
 
 import (
+	"Iremot-RaspberryPi/device/pinmap"
 	"Iremot-RaspberryPi/device/rpio"
 	"fmt"
 	"time"
@@ -26,7 +27,7 @@ func (this *OutputTask) Init() {
 func (this *OutputTask) Run() {
 
 	index := 0
-	pin := rpio.Pin(Physical2BCM[this.Pin])
+	pin := rpio.Pin(pinmap.Physical2BCM[this.Pin])
 
 START:
 
