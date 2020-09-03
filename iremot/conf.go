@@ -3,7 +3,7 @@ package iremot
 import "Iremot-RaspberryPi/conf"
 
 //mqtt connect
-var Server string = "tcp://192.168.1.80:1883"
+var Server string = "tcp://mqtt.iremot.com:1883"
 
 //心跳
 func TOPIC_HEARTBEAT() string {
@@ -35,7 +35,7 @@ func TOPIC_DEFGPIO() string {
 	return "iremot_pi/" + conf.ProductId + "/" + conf.ID() + "/def_gpio"
 }
 
-//def gpio
+//全部设备任务
 func TOPIC_DEVICEALLGPIOTASK() string {
 	return "iremot_pi/" + conf.ProductId + "/device_all/gpio_task"
 }

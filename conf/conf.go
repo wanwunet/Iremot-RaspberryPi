@@ -2,4 +2,4 @@ package conf
 
 var ProductId = "100000"
 
-var Password = "ZKOf01aK68OmKbjEVUIW9Ede"
+var Password = "h7Z0E5FbATs30Ld2IFtcCA85"
